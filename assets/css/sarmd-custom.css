@@ -353,10 +353,10 @@ a:active {
 
 .project-card-logo {
     width: 100%;
-    height: clamp(200px, 28vw, 260px);
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
     object-position: center;
-    background-color: var(--sarmd-floral-white);
+    background-color: transparent;
 }
 
 .project-detail-logo {
@@ -487,9 +487,10 @@ a:active {
 }
 
 .projects-carousel .card.blog .position-relative img {
-    object-fit: cover;
     height: 100%;
     width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 @media (max-width: 767.98px) {
