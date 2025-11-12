@@ -222,18 +222,37 @@ a:active {
 
 .home-hero {
     position: relative;
-    min-height: calc(100vh - 88px);
+    min-height: 60vh;
     display: flex;
     align-items: center;
-    padding: 140px 0 120px;
-    background: center / cover no-repeat url("../images/pexels-diva-33964231.jpg");
+    padding: 80px 0 0;
+    background: center / contain no-repeat url("../images/لوقو سرمد2.jpg");
+    background-color: var(--sarmd-oil-color);
+}
+
+.home-hero .shape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.home-hero .shape svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 48px;
+}
+
+.home-hero .shape svg path {
+    fill: #F2F0EF;
 }
 
 .home-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(216, 207, 188, 0.72);
+    content: none;
 }
 
 .home-hero .container {
@@ -363,6 +382,14 @@ a:active {
     color: var(--sarmd-oil-color);
 }
 
+.details-highlight {
+    background-color: var(--bs-light) !important;
+}
+
+.details-highlight {
+    background-color: var(--bs-light) !important;
+}
+
 ::selection,
 ::-moz-selection {
     background: rgba(216, 207, 188, 0.85);
@@ -457,9 +484,106 @@ a:active {
 
 .section {
     background-color: #F2F0EF;
+    padding: clamp(40px, 6vw, 72px) 0;
+}
+
+.mt-100 {
+    margin-top: clamp(40px, 6vw, 72px) !important;
+}
+
+.mt-60 {
+    margin-top: clamp(32px, 5vw, 56px) !important;
 }
 
 .bg-light {
     background-color: #F2F0EF !important;
+}
+
+.popular-tour {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.popular-tour img {
+    width: 100%;
+    height: clamp(240px, 45vw, 340px);
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.popular-tour:hover img {
+    transform: scale(1.1);
+}
+
+.popular-tour .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popular-tour:hover .content {
+    opacity: 1;
+}
+
+.popular-tour .content .title {
+    color: var(--sarmd-floral-white) !important;
+    font-weight: 600;
+    margin: 0;
+}
+
+.contact-detail {
+    padding: 1rem 0;
+}
+
+.contact-detail .icon {
+    flex-shrink: 0;
+}
+
+.contact-detail .content h6 {
+    color: var(--sarmd-smoky-black);
+    margin-bottom: 0.25rem;
+}
+
+.contact-detail .content a {
+    color: var(--sarmd-oil-color) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-detail .content a:hover {
+    color: var(--sarmd-smoky-black) !important;
+}
+.tns-nav button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(17, 18, 13, 0.15) !important;
+    border: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.tns-nav button.tns-nav-active {
+    background-color: var(--sarmd-oil-color) !important;
+    transform: rotate(45deg) scale(1.15);
+}
+
+
+@media (max-width: 767.98px) {
+    .popular-tour img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .home-hero {
+        min-height: 320px;
+        padding: 60px 0 40px;
+    }
 }
 
