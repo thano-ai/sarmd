@@ -554,6 +554,7 @@ a:active {
     height: clamp(240px, 45vw, 340px);
     object-fit: cover;
     transition: transform 0.5s ease;
+    cursor: zoom-in;
 }
 
 .popular-tour:hover img {
@@ -569,10 +570,39 @@ a:active {
     background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .popular-tour:hover .content {
     opacity: 1;
+}
+
+.popular-tour .gallery-lightbox {
+    display: block;
+    position: relative;
+}
+
+.popular-tour .gallery-lightbox:focus {
+    outline: none;
+}
+
+.glightbox-clean .gdesc,
+.glightbox-clean .gdesc-inner {
+    display: none !important;
+}
+
+.glightbox-clean .gslide-image img {
+    max-width: 100%;
+    max-height: 100vh;
+}
+
+.glightbox-clean .gbtn {
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 999px;
+}
+
+.glightbox-clean .gbtn:hover {
+    background: rgba(0, 0, 0, 0.65);
 }
 
 .popular-tour .content .title {
@@ -615,19 +645,5 @@ a:active {
 .tns-nav button.tns-nav-active {
     background-color: var(--sarmd-oil-color) !important;
     transform: rotate(45deg) scale(1.15);
-}
-
-
-@media (max-width: 767.98px) {
-    .popular-tour img {
-        height: 300px;
-    }
-}
-
-@media (max-width: 767.98px) {
-    .home-hero {
-        min-height: 320px;
-        padding: 60px 0 40px;
-    }
 }
 

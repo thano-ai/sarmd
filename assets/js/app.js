@@ -206,13 +206,137 @@ for(var i = 0, len = ddmenu.length; i < len; i++) {
 }
 
 //Tooltip
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+var tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = (typeof bootstrap !== 'undefined') ? tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
-});
+}) : [];
 
 //Popovers
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+var popoverTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="popover"]'));
+var popoverList = (typeof bootstrap !== 'undefined') ? popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl)
-})
+}) : [];
+
+// Gallery Image Zoom Modal
+(function () {
+    'use strict';
+
+    var glightboxCallbacks = [];
+    var glightboxScriptLoaded = false;
+
+    function ensureGlightboxStyles() {
+        if (!document.querySelector('link[data-glightbox]')) {
+            var linkEl = document.createElement('link');
+            linkEl.rel = 'stylesheet';
+            linkEl.href = 'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css';
+            linkEl.setAttribute('data-glightbox', 'true');
+            document.head.appendChild(linkEl);
+        }
+    }
+
+    function loadGlightboxAssets(callback) {
+        ensureGlightboxStyles();
+
+        if (typeof GLightbox !== 'undefined') {
+            callback();
+            return;
+        }
+
+        glightboxCallbacks.push(callback);
+
+        if (glightboxScriptLoaded) {
+            return;
+        }
+
+        glightboxScriptLoaded = true;
+
+        var scriptEl = document.createElement('script');
+        scriptEl.src = 'https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js';
+        scriptEl.async = true;
+        scriptEl.defer = true;
+        scriptEl.onload = function () {
+            var pending = glightboxCallbacks.slice();
+            glightboxCallbacks.length = 0;
+            pending.forEach(function (cb) { cb(); });
+        };
+        document.body.appendChild(scriptEl);
+    }
+
+    function createLightboxLinks() {
+        var galleries = document.querySelectorAll('.tiny-six-item');
+        if (!galleries.length) {
+            return [];
+        }
+
+        var lightboxNodes = [];
+
+        galleries.forEach(function (gallery, galleryIndex) {
+            var galleryId = gallery.getAttribute('data-gallery') || ('project-gallery-' + (galleryIndex + 1));
+            gallery.setAttribute('data-gallery', galleryId);
+
+            var images = gallery.querySelectorAll('.popular-tour img');
+            images.forEach(function (img, imageIndex) {
+                var fullSrc = img.getAttribute('data-full') || img.getAttribute('src');
+                if (!fullSrc) {
+                    return;
+                }
+
+                var wrapper = img.closest('a.gallery-lightbox');
+                if (!wrapper) {
+                    wrapper = document.createElement('a');
+                    wrapper.className = 'gallery-lightbox';
+                    wrapper.setAttribute('aria-label', 'عرض الصورة بالحجم الكامل');
+                    img.parentNode.insertBefore(wrapper, img);
+                    wrapper.appendChild(img);
+                }
+
+                wrapper.href = fullSrc;
+                wrapper.setAttribute('data-gallery', galleryId);
+                wrapper.removeAttribute('data-title');
+                wrapper.removeAttribute('title');
+                wrapper.setAttribute('data-description', '');
+
+                lightboxNodes.push(wrapper);
+            });
+        });
+
+        return lightboxNodes;
+    }
+
+    function initializeGalleryLightbox() {
+        var lightboxLinks = createLightboxLinks();
+        if (!lightboxLinks.length || typeof GLightbox === 'undefined') {
+            return;
+        }
+
+        if (window.galleryLightboxInstance && typeof window.galleryLightboxInstance.destroy === 'function') {
+            window.galleryLightboxInstance.destroy();
+        }
+
+        window.galleryLightboxInstance = GLightbox({
+            selector: '.gallery-lightbox',
+            touchNavigation: true,
+            loop: true,
+            openEffect: 'zoom',
+            closeEffect: 'fade',
+            zoomable: true,
+            draggable: true,
+            autoplayVideos: false
+        });
+    }
+
+    function initGalleryLightbox() {
+        var galleries = document.querySelectorAll('.tiny-six-item');
+        if (!galleries.length) {
+            return;
+        }
+
+        loadGlightboxAssets(initializeGalleryLightbox);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGalleryLightbox);
+    } else {
+        initGalleryLightbox();
+    }
+})();
