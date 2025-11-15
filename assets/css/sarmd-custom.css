@@ -528,6 +528,71 @@ a:active {
     transform: rotate(45deg) scale(1.15);
 }
 
+.projects-carousel-wrapper {
+    position: relative;
+    padding: 0 2.5rem;
+}
+
+.projects-carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--sarmd-oil-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.projects-carousel-control i {
+    font-size: 1.35rem;
+}
+
+.projects-carousel-control:hover,
+.projects-carousel-control:focus {
+    background: var(--sarmd-oil-color);
+    color: #fff;
+    outline: none;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.projects-carousel-prev {
+    left: 0.5rem;
+}
+
+.projects-carousel-next {
+    right: 0.5rem;
+}
+
+@media (min-width: 992px) {
+    .projects-carousel-prev {
+        left: -1.5rem;
+    }
+
+    .projects-carousel-next {
+        right: -1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .projects-carousel-wrapper {
+        padding: 0 1rem;
+    }
+
+    .projects-carousel-control {
+        width: 40px;
+        height: 40px;
+    }
+}
+
 .brand-highlight {
     padding-top: 0;
     padding-bottom: 40px;
